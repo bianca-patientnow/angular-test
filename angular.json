@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "projects": {
+    "angulat-test-app": {
+      "projectType": "application",
+      "root": "apps/angulat-test-app",
+      "sourceRoot": "apps/angulat-test-app/src",
+      "prefix": "angular-test",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/angulat-test-app",
+            "index": "apps/angulat-test-app/src/index.html",
+            "main": "apps/angulat-test-app/src/main.ts",
+            "polyfills": "apps/angulat-test-app/src/polyfills.ts",
+            "tsConfig": "apps/angulat-test-app/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/angulat-test-app/src/favicon.ico",
+              "apps/angulat-test-app/src/assets"
+            ],
+            "styles": [
+              "apps/angulat-test-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/angulat-test-app/src/environments/environment.ts",
+                  "with": "apps/angulat-test-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "angulat-test-app:build:production"
+            },
+            "development": {
+              "browserTarget": "angulat-test-app:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "angulat-test-app:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/angulat-test-app/src/**/*.ts",
+              "apps/angulat-test-app/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/angulat-test-app"
+          ],
+          "options": {
+            "jestConfig": "apps/angulat-test-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": [],
+      "configFilePath": "apps/angulat-test-app/project.json"
+    },
+    "angulat-test-app-e2e": {
+      "root": "apps/angulat-test-app-e2e",
+      "sourceRoot": "apps/angulat-test-app-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/angulat-test-app-e2e/cypress.json",
+            "devServerTarget": "angulat-test-app:serve:development",
+            "tsConfig": "apps/angulat-test-app-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angulat-test-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "apps/angulat-test-app-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": [
+        "angulat-test-app"
+      ],
+      "configFilePath": "apps/angulat-test-app-e2e/project.json"
+    }
+  }
+}
